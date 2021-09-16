@@ -1,0 +1,20 @@
+server:
+  name: demo3-gin
+  port: 8080
+
+sql:
+  driver: sqlserver
+  data_source_name: sa:admin@123456/demogo?charset=utf8&parseTime=True&loc=Local
+
+log:
+  level: info
+  map:
+    time: "@timestamp"
+    msg: message
+
+middleware:
+  log: true
+  skips: /health
+  request: request
+  response: response
+  size: size
