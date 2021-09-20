@@ -22,26 +22,26 @@ func (h *UserHandler) GetAll(c *gin.Context) {
 	result, err := h.service.GetAll(context.Background())
 	if err != nil {
 		c.Error(err)
-		c.JSON(http.StatusBadRequest, gin.H{"error " : " don't get all users"})
+		c.JSON(http.StatusBadRequest, gin.H{"error ": " don't get all users"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data ": result})
+	c.JSON(http.StatusOK, result)
 }
 
 func (h *UserHandler) Load(c *gin.Context) {
 	id := c.Param("id")
 	if len(id) == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error " : " user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error ": " user not found"})
 		return
 	}
 
 	result, err := h.service.Load(context.Background(), id)
 	if err != nil {
 		c.Error(err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error " : " data missing"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error ": " data missing"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data " : result})
+	c.JSON(http.StatusOK, result)
 }
 
 func (h *UserHandler) Insert(c *gin.Context) {
@@ -59,8 +59,7 @@ func (h *UserHandler) Insert(c *gin.Context) {
 		c.Error(er2)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message":"Insert new user success",
-								"data" : &user})
+	c.JSON(http.StatusOK, gin.H{"message": "Insert new user success"})
 
 }
 
@@ -76,14 +75,14 @@ func (h *UserHandler) Update(c *gin.Context) {
 
 	id := c.Param("id")
 	if len(id) == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error":"user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error ": " user not empty"})
 		return
 	}
 
 	if len(user.Id) == 0 {
 		user.Id = id
 	} else if id != user.Id {
-		c.JSON(http.StatusBadRequest,gin.H{"error":"Id not match"})
+		c.JSON(http.StatusBadRequest, gin.H{"error ": " Id not match"})
 		return
 	}
 
@@ -92,14 +91,13 @@ func (h *UserHandler) Update(c *gin.Context) {
 		c.Error(er2)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message":"Update user success",
-								"data" : &user})
+	c.JSON(http.StatusOK, gin.H{"message": "Update user success"})
 }
 
 func (h *UserHandler) Patch(c *gin.Context) {
 	id := c.Param("id")
 	if len(id) == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error":"user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
 		return
 	}
 	ids := []string{"id"}
@@ -111,7 +109,7 @@ func (h *UserHandler) Patch(c *gin.Context) {
 	if len(user.Id) == 0 {
 		user.Id = id
 	} else if id != user.Id {
-		c.JSON(http.StatusBadRequest,gin.H{"error":"Id not match"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Id not match"})
 		return
 	}
 	json, er1 := sv.BodyToJson(c.Request, user, body, ids, jsonMap, nil)
@@ -125,13 +123,13 @@ func (h *UserHandler) Patch(c *gin.Context) {
 		c.Error(er2)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message":"user has patched", "data": "" })
+	c.JSON(http.StatusOK, gin.H{"message": "user has patched"})
 }
 
 func (h *UserHandler) Delete(c *gin.Context) {
 	id := c.Param("id")
 	if len(id) == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error":"user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user not empty"})
 		return
 	}
 
@@ -140,6 +138,6 @@ func (h *UserHandler) Delete(c *gin.Context) {
 		c.Error(err)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message ": " delete success",
-								"data " : true})
+	c.JSON(http.StatusOK, gin.H{"message ": " delete success"})
+
 }
